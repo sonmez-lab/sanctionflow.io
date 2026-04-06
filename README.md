@@ -251,7 +251,7 @@ curl http://localhost:8000/api/threat-intel/stats
 ---
 
 <p align="center">
-  <strong>Developed by Osman Sonmez — Irvine, California</strong><br>
+  <strong>Developed by Osman Sonmez </strong><br>
   <a href="https://sanctionflow.io">sanctionflow.io</a> · 
   <a href="https://github.com/sonmez-lab">github.com/sonmez-lab</a> · 
   <a href="https://scholar.google.com">Google Scholar</a>
