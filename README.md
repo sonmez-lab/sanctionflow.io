@@ -220,30 +220,6 @@ Mining Operations       Exchanges                                       Grinex
 
 ---
 
-## Research Foundation
-
-Eight published studies providing the empirical basis for SanctionFlow's detection algorithms and AI training data:
-
-| # | Paper | DOI |
-|---|-------|-----|
-| 1 | Turkey-Iran Cryptocurrency Corridor | [10.2139/ssrn.6340458](https://doi.org/10.2139/ssrn.6340458) |
-| 2 | Iran's USDT Stablecoin-Based Sanctions Evasion | [10.2139/ssrn.6362678](https://doi.org/10.2139/ssrn.6362678) |
-| 3 | Garantex & Grinex: Russian Crypto Laundromats | [10.2139/ssrn.6363259](https://doi.org/10.2139/ssrn.6363259) |
-| 4 | Cross-Chain Bridges & Mixers Exploitation | [10.2139/ssrn.6375458](https://doi.org/10.2139/ssrn.6375458) |
-| 5 | DeFi Protocols as Sanctions Evasion Vectors | [10.2139/ssrn.6375058](https://doi.org/10.2139/ssrn.6375058) |
-| 6 | Stablecoin AML: EU MiCA vs U.S. Approaches | [10.2139/ssrn.6368040](https://doi.org/10.2139/ssrn.6368040) |
-| 7 | Blockchain Analytics Effectiveness | [10.2139/ssrn.6375118](https://doi.org/10.2139/ssrn.6375118) |
-| 8 | Turkey's FATF Grey-List Exit | [10.2139/ssrn.6375178](https://doi.org/10.2139/ssrn.6375178) |
-
----
-
-## Policy Engagement
-
-- **FinCEN** — Public comment on MBaer Merchant Bank AG Section 311 NPRM (Docket FINCEN-2026-0001, Tracking: mna-p5qk-o7hg)
-- **OCC** — Public comment on GENIUS Act stablecoin implementation (Docket OCC-2025-0372, RIN 1557-AF41)
-
----
-
 ## Quick Start
 
 ```bash
