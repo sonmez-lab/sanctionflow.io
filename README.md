@@ -53,8 +53,7 @@ OFAC maintains **~1,200 designated cryptocurrency addresses** on the SDN list. C
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │  LAYER 4 — AI INTELLIGENCE                                       │
-│  Multi-model with failover · ReAct agent · Adversarial debate    │
-│  Claude (Primary) · Qwen (Fallback) · DeepSeek (Fallback)       │
+│  Multi-model with failover · ReAct agent · Adversarial debate    │      │
 └──────────────────────────────┬──────────────────────────────────┘
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
