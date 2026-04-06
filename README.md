@@ -10,7 +10,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Version-2.0-14b8a6?style=flat-square" />
   <img src="https://img.shields.io/badge/License-MIT-14b8a6?style=flat-square" />
-  <img src="https://img.shields.io/badge/AI--Powered-Claude_|_Qwen_|_DeepSeek-14b8a6?style=flat-square" />
+  <img src="https://img.shields.io/badge/AI_Engine-SanctionFlow_AI-14b8a6?style=flat-square" />
   <img src="https://img.shields.io/badge/Open_Source-Yes-14b8a6?style=flat-square" />
 </p>
 
@@ -52,8 +52,9 @@ OFAC maintains **~1,200 designated cryptocurrency addresses** on the SDN list. C
 └──────────────────────────────┬──────────────────────────────────┘
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  LAYER 4 — AI INTELLIGENCE                                       │
-│  Multi-model with failover · ReAct agent · Adversarial debate    │      │
+│  LAYER 4 — SANCTIONFLOW AI ENGINE                                │
+│  Domain-trained compliance model · Multi-model orchestration     │
+│  Adversarial debate protocol · ReAct autonomous agent            │
 └──────────────────────────────┬──────────────────────────────────┘
                                ▼
 ┌─────────────────────────────────────────────────────────────────┐
@@ -62,6 +63,23 @@ OFAC maintains **~1,200 designated cryptocurrency addresses** on the SDN list. C
 │  REST API · Telegram · Email                                     │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## SanctionFlow AI Engine
+
+The intelligence layer is powered by a proprietary multi-model AI architecture purpose-built for sanctions compliance analysis.
+
+| Component | Description |
+|-----------|-------------|
+| **Domain-Trained Compliance Model** | Fine-tuned on OFAC enforcement actions, corridor intelligence data, SAR narratives, and FinCEN advisories |
+| **Multi-Model Orchestration** | Three independent AI models with automatic failover for uninterrupted analysis |
+| **Adversarial Debate Protocol** | Prosecutor / Defender / Judge framework — three models stress-test each risk assessment from opposing perspectives |
+| **ReAct Investigation Agent** | Autonomous multi-step blockchain investigation using Reasoning-and-Acting pattern |
+| **Corridor-Specific Training Data** | Model trained on 890,000 analyzed transactions and 52,000 attributed wallets from the Turkey-Russia-Iran corridor |
+| **SAR Narrative Generation** | Generates FinCEN-compliant suspicious activity report narratives from structured risk data |
+
+**Why a domain-specific model matters:** General-purpose AI models lack the specialized knowledge to distinguish between legitimate high-volume stablecoin transfers and sanctions evasion patterns. SanctionFlow AI is trained on real enforcement data — OFAC designations, DOJ seizure documents, corridor transaction patterns — enabling detection that generic models cannot achieve.
 
 ---
 
@@ -177,7 +195,7 @@ Mining Operations       Exchanges                                       Grinex
 | 🔗 **Cross-Chain Bridge Trace** | 27 bridge protocols monitored |
 | 🌍 **Corridor Intelligence** | Turkey-Russia-Iran-UAE flow analysis |
 | 🗺️ **Risk Heatmap** | 32 countries, 5 risk levels, 8 corridors |
-| 🤖 **AI Risk Analysis** | Multi-model + adversarial debate protocol |
+| 🤖 **AI Risk Analysis** | SanctionFlow AI Engine with adversarial debate |
 | 💬 **Compliance AI Assistant** | Natural language queries with source citations |
 | 📋 **SAR Generator** | FinCEN-ready suspicious activity report drafts |
 | 🛡️ **Threat Intel Database** | 520K+ addresses, 12 sources, composite scoring |
@@ -196,7 +214,7 @@ Mining Operations       Exchanges                                       Grinex
 | **Backend** | Python 3.11 · FastAPI · SQLAlchemy async · asyncpg |
 | **Database** | PostgreSQL (Neon serverless) |
 | **Cache** | Redis (24h TTL) |
-| **AI** | Anthropic Claude (primary) · Qwen · DeepSeek (fallback via OpenRouter) |
+| **AI Engine** | SanctionFlow AI — domain-trained multi-model architecture with adversarial debate and autonomous investigation agent |
 | **Frontend** | React 18 · Vite · Tailwind CSS · D3.js |
 | **Deployment** | Render (backend) · Vercel (frontend) · GitHub Actions (CI/CD) |
 
@@ -204,7 +222,7 @@ Mining Operations       Exchanges                                       Grinex
 
 ## Research Foundation
 
-Eight published studies providing the empirical basis for SanctionFlow's detection algorithms:
+Eight published studies providing the empirical basis for SanctionFlow's detection algorithms and AI training data:
 
 | # | Paper | DOI |
 |---|-------|-----|
@@ -232,7 +250,7 @@ Eight published studies providing the empirical basis for SanctionFlow's detecti
 git clone https://github.com/sonmez-lab/sanctionflow-ci.git
 cd sanctionflow-ci
 pip install -r requirements.txt
-cp .env.example .env   # Add your API keys
+cp .env.example .env
 uvicorn backend.main:app --reload --port 8000
 ```
 
