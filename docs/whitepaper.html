@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SanctionFlow — Visual Architecture</title>
+<style>
+:root {
+  --bg: #0a0f1a;
+  --card: #111827;
+  --border: #1e293b;
+  --teal: #0d9488;
+  --teal-light: #14b8a6;
+  --teal-glow: rgba(13,148,136,0.15);
+  --red: #ef4444;
+  --orange: #f97316;
+  --yellow: #eab308;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --text-bright: #f8fafc;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; line-height:1.6; }
+
+.container { max-width:1200px; margin:0 auto; padding:40px 24px; }
+
+/* Header */
+.header { text-align:center; padding:60px 0 40px; }
+.header h1 { font-size:42px; font-weight:600; color:var(--text-bright); letter-spacing:-1px; }
+.header h1 span { color:var(--teal); }
+.header .subtitle { font-size:16px; color:var(--text-dim); margin-top:8px; letter-spacing:3px; text-transform:uppercase; }
+.header .badge { display:inline-block; margin-top:16px; padding:6px 16px; border:1px solid var(--teal); border-radius:20px; font-size:12px; color:var(--teal); letter-spacing:2px; }
+
+/* Stats bar */
+.stats-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:48px 0; }
+.stat { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; text-align:center; }
+.stat .num { font-size:36px; font-weight:700; color:var(--teal-light); }
+.stat .label { font-size:13px; color:var(--text-dim); margin-top:4px; text-transform:uppercase; letter-spacing:1px; }
+
+/* Section */
+.section { margin:60px 0; }
+.section-title { font-size:24px; font-weight:600; color:var(--text-bright); margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+.section-title .dot { width:8px; height:8px; background:var(--teal); border-radius:50%; }
+.section-desc { color:var(--text-dim); font-size:15px; margin-bottom:32px; max-width:700px; }
+
+/* Architecture */
+.arch-flow { display:flex; flex-direction:column; gap:2px; align-items:center; }
+.arch-layer { width:100%; max-width:900px; display:flex; align-items:center; gap:0; }
+.arch-box { flex:1; background:var(--card); border:1px solid var(--border); padding:20px 24px; position:relative; transition:all 0.3s; }
+.arch-box:hover { border-color:var(--teal); background:var(--teal-glow); }
+.arch-box .layer-num { font-size:11px; color:var(--teal); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+.arch-box .layer-name { font-size:18px; font-weight:600; color:var(--text-bright); }
+.arch-box .layer-desc { font-size:13px; color:var(--text-dim); margin-top:6px; }
+.arch-box .layer-tech { margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; }
+.arch-box .layer-tech span { font-size:11px; background:rgba(14,165,149,0.1); color:var(--teal-light); padding:2px 8px; border-radius:4px; border:1px solid rgba(14,165,149,0.2); }
+.arch-arrow { width:40px; display:flex; justify-content:center; color:var(--teal); font-size:20px; }
+.arch-connector { width:2px; height:20px; background:var(--teal); margin:0 auto; opacity:0.4; }
+
+/* Sources grid */
+.sources-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.source-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; transition:all 0.3s; }
+.source-card:hover { border-color:var(--teal); }
+.source-card .s-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.source-card .s-name { font-size:14px; font-weight:600; color:var(--text-bright); }
+.source-card .s-conf { font-size:12px; padding:2px 8px; border-radius:10px; font-weight:600; }
+.conf-max { background:rgba(16,185,129,0.15); color:#10b981; }
+.conf-high { background:rgba(59,130,246,0.15); color:#3b82f6; }
+.conf-med { background:rgba(234,179,8,0.15); color:#eab308; }
+.conf-low { background:rgba(249,115,22,0.15); color:#f97316; }
+.source-card .s-type { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+.source-card .s-count { font-size:13px; color:var(--text-dim); margin-top:4px; }
+
+/* Typologies */
+.typo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.typo-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; position:relative; overflow:hidden; }
+.typo-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.typo-card.t1::before { background:var(--red); }
+.typo-card.t2::before { background:var(--orange); }
+.typo-card.t3::before { background:var(--yellow); }
+.typo-card .t-num { font-size:11px; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+.typo-card.t1 .t-num { color:var(--red); }
+.typo-card.t2 .t-num { color:var(--orange); }
+.typo-card.t3 .t-num { color:var(--yellow); }
+.typo-card .t-name { font-size:17px; font-weight:600; color:var(--text-bright); margin-bottom:12px; }
+.typo-card .t-factor { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid var(--border); font-size:13px; }
+.typo-card .t-factor:last-child { border:none; }
+.typo-card .t-factor .f-name { color:var(--text-dim); }
+.typo-card .t-factor .f-bar { width:60px; height:6px; background:var(--border); border-radius:3px; overflow:hidden; }
+.typo-card .t-factor .f-fill { height:100%; border-radius:3px; }
+.t1 .f-fill { background:var(--red); }
+.t2 .f-fill { background:var(--orange); }
+.t3 .f-fill { background:var(--yellow); }
+
+/* Modules */
+.mod-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.mod-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; text-align:center; transition:all 0.3s; cursor:default; }
+.mod-card:hover { border-color:var(--teal); transform:translateY(-2px); }
+.mod-card .m-icon { font-size:28px; margin-bottom:8px; }
+.mod-card .m-name { font-size:13px; font-weight:600; color:var(--text-bright); }
+.mod-card .m-desc { font-size:11px; color:var(--text-dim); margin-top:4px; }
+
+/* Risk formula */
+.formula-box { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:32px; text-align:center; }
+.formula { font-family:'Courier New',monospace; font-size:18px; color:var(--teal-light); line-height:2.2; }
+.formula .op { color:var(--text-dim); }
+.formula .weight { color:var(--orange); }
+
+/* Risk scale */
+.risk-scale { display:flex; gap:0; margin-top:24px; border-radius:8px; overflow:hidden; }
+.risk-level { flex:1; padding:12px; text-align:center; }
+.risk-level .r-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+.risk-level .r-range { font-size:11px; opacity:0.7; margin-top:2px; }
+.rl-low { background:rgba(16,185,129,0.15); color:#10b981; }
+.rl-med { background:rgba(234,179,8,0.15); color:#eab308; }
+.rl-high { background:rgba(249,115,22,0.15); color:#f97316; }
+.rl-crit { background:rgba(239,68,68,0.15); color:#ef4444; }
+
+/* Corridor */
+.corridor-visual { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:32px; }
+.corridor-flow { display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; }
+.corridor-node { text-align:center; padding:16px 24px; }
+.corridor-node .c-flag { font-size:36px; }
+.corridor-node .c-name { font-size:13px; font-weight:600; color:var(--text-bright); margin-top:4px; }
+.corridor-node .c-detail { font-size:11px; color:var(--text-dim); }
+.corridor-arrow { color:var(--teal); font-size:24px; padding:0 8px; }
+.corridor-stat { display:flex; justify-content:center; gap:40px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+.corridor-stat div { text-align:center; }
+.corridor-stat .cs-num { font-size:24px; font-weight:700; color:var(--teal-light); }
+.corridor-stat .cs-label { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+
+/* Footer */
+.footer { text-align:center; padding:60px 0 40px; border-top:1px solid var(--border); margin-top:60px; }
+.footer .f-name { font-size:18px; font-weight:600; color:var(--text-bright); }
+.footer .f-links { margin-top:12px; display:flex; justify-content:center; gap:24px; }
+.footer .f-links a { color:var(--teal); text-decoration:none; font-size:13px; }
+
+/* Responsive */
+@media (max-width:768px) {
+  .stats-bar { grid-template-columns:repeat(2,1fr); }
+  .sources-grid { grid-template-columns:1fr; }
+  .typo-grid { grid-template-columns:1fr; }
+  .mod-grid { grid-template-columns:repeat(2,1fr); }
+  .corridor-flow { flex-direction:column; }
+  .corridor-arrow { transform:rotate(90deg); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Sanction<span>Flow</span></h1>
+  <div class="subtitle">Corridor Intelligence Platform</div>
+  <div class="badge">AI-POWERED &nbsp;•&nbsp; OPEN SOURCE &nbsp;•&nbsp; v2.0</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="num">520K+</div><div class="label">Flagged Addresses</div></div>
+  <div class="stat"><div class="num">12</div><div class="label">Intel Sources</div></div>
+  <div class="stat"><div class="num">3</div><div class="label">Blockchains</div></div>
+  <div class="stat"><div class="num">6</div><div class="label">Evasion Typologies</div></div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Platform Architecture</div>
+  <div class="section-desc">Five-layer intelligence pipeline transforming raw blockchain data into actionable risk assessments.</div>
+
+  <div class="arch-flow">
+    <div class="arch-layer">
+      <div class="arch-box" style="border-radius:12px 12px 0 0;">
+        <div class="layer-num">Layer 1</div>
+        <div class="layer-name">Data Aggregation</div>
+        <div class="layer-desc">Ingests from 12 sources. OFAC SDN sync every 30 min. Deduplication + confidence scoring.</div>
+        <div class="layer-tech"><span>OFAC SDN</span><span>EU Sanctions</span><span>Tether Blacklist</span><span>Chainabuse</span><span>+8 more</span></div>
+      </div>
+    </div>
+    <div class="arch-connector"></div>
+    <div class="arch-layer">
+      <div class="arch-box">
+        <div class="layer-num">Layer 2</div>
+        <div class="layer-name">Blockchain Analysis</div>
+        <div class="layer-desc">Multi-chain transaction analysis. 1-hop and 2-hop neighborhood mapping.</div>
+        <div class="layer-tech"><span>Bitcoin / Blockstream</span><span>Ethereum / Etherscan</span><span>Tron / Tronscan</span><span>BigQuery</span></div>
+      </div>
+    </div>
+    <div class="arch-connector"></div>
+    <div class="arch-layer">
+      <div class="arch-box">
+        <div class="layer-num">Layer 3</div>
+        <div class="layer-name">Pattern Detection Engine</div>
+        <div class="layer-desc">6 evasion typologies as algorithmic scoring functions. Corridor flow intelligence.</div>
+        <div class="layer-tech"><span>Trade Settlement</span><span>Mining Monetization</span><span>Nested Exchange</span><span>Bridge Hopping</span></div>
+      </div>
+    </div>
+    <div class="arch-connector"></div>
+    <div class="arch-layer">
+      <div class="arch-box">
+        <div class="layer-num">Layer 4</div>
+        <div class="layer-name">AI Intelligence</div>
+        <div class="layer-desc">Multi-model architecture with failover. ReAct agent + adversarial debate protocol.</div>
+        <div class="layer-tech"><span>Claude (Primary)</span><span>Qwen (Fallback)</span><span>DeepSeek (Fallback)</span><span>ReAct Agent</span></div>
+      </div>
+    </div>
+    <div class="arch-connector"></div>
+    <div class="arch-layer">
+      <div class="arch-box" style="border-radius:0 0 12px 12px;">
+        <div class="layer-num">Layer 5</div>
+        <div class="layer-name">Alert & Reporting</div>
+        <div class="layer-desc">Real-time designation alerts. Daily briefs. PDF reports. SAR narrative drafts.</div>
+        <div class="layer-tech"><span>PDF Reports</span><span>SAR Generator</span><span>Daily Brief</span><span>REST API</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THREAT INTEL SOURCES -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Threat Intelligence Sources</div>
+  <div class="section-desc">520,562+ addresses aggregated from 12 independent sources with composite confidence scoring.</div>
+
+  <div class="sources-grid">
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">OFAC SDN List</div><div class="s-conf conf-max">1.00</div></div>
+      <div class="s-type">U.S. Government</div>
+      <div class="s-count">~772 designated crypto addresses</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">EU Sanctions</div><div class="s-conf conf-max">0.95</div></div>
+      <div class="s-type">Government</div>
+      <div class="s-count">EU consolidated list (XML)</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">UK OFSI</div><div class="s-conf conf-max">0.95</div></div>
+      <div class="s-type">Government</div>
+      <div class="s-count">UK sanctions designations</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Tether Blacklist</div><div class="s-conf conf-high">0.90</div></div>
+      <div class="s-type">Issuer Enforcement</div>
+      <div class="s-count">~1,200 frozen addresses</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Ransomwhere</div><div class="s-conf conf-high">0.85</div></div>
+      <div class="s-type">Security Research</div>
+      <div class="s-count">~11,000 ransomware addresses</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">GraphSense TagPacks</div><div class="s-conf conf-high">0.80</div></div>
+      <div class="s-type">Academic</div>
+      <div class="s-count">76 tagpack files (AIT Vienna)</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Exchange Wallets</div><div class="s-conf conf-high">0.75</div></div>
+      <div class="s-type">Curated</div>
+      <div class="s-count">500+ known hot/cold wallets</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Etherscan Labels</div><div class="s-conf conf-med">0.70</div></div>
+      <div class="s-type">Open Source</div>
+      <div class="s-count">~45,000 labeled addresses</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">EtherScamDB</div><div class="s-conf conf-med">0.65</div></div>
+      <div class="s-type">Curated</div>
+      <div class="s-count">Phishing & fraud addresses</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Chainabuse</div><div class="s-conf conf-low">0.40</div></div>
+      <div class="s-type">Community</div>
+      <div class="s-count">~50,000+ scam reports</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Tornado Cash</div><div class="s-conf conf-max">1.00</div></div>
+      <div class="s-type">OFAC Designated</div>
+      <div class="s-count">28 designated contracts</div>
+    </div>
+    <div class="source-card">
+      <div class="s-head"><div class="s-name">Bridge Contracts</div><div class="s-conf conf-high">0.75</div></div>
+      <div class="s-type">Monitored</div>
+      <div class="s-count">27 tracked protocols</div>
+    </div>
+  </div>
+</div>
+
+<!-- EVASION TYPOLOGIES -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Empirically Derived Evasion Typologies</div>
+  <div class="section-desc">Three core typologies identified from analysis of 890,000 transactions across 52,000 wallets in the Turkey-Iran corridor.</div>
+
+  <div class="typo-grid">
+    <div class="typo-card t1">
+      <div class="t-num">Typology 1</div>
+      <div class="t-name">Stablecoin Trade Settlement</div>
+      <div class="t-factor"><span class="f-name">Stablecoin Ratio</span><div class="f-bar"><div class="f-fill" style="width:80%"></div></div><span>0.20</span></div>
+      <div class="t-factor"><span class="f-name">Round Amounts</span><div class="f-bar"><div class="f-fill" style="width:80%"></div></div><span>0.20</span></div>
+      <div class="t-factor"><span class="f-name">Temporal Regularity</span><div class="f-bar"><div class="f-fill" style="width:80%"></div></div><span>0.20</span></div>
+      <div class="t-factor"><span class="f-name">Business Hours</span><div class="f-bar"><div class="f-fill" style="width:80%"></div></div><span>0.20</span></div>
+      <div class="t-factor"><span class="f-name">Volume Velocity</span><div class="f-bar"><div class="f-fill" style="width:40%"></div></div><span>0.10</span></div>
+      <div class="t-factor"><span class="f-name">Counterparty Conc.</span><div class="f-bar"><div class="f-fill" style="width:40%"></div></div><span>0.10</span></div>
+    </div>
+    <div class="typo-card t2">
+      <div class="t-num">Typology 2</div>
+      <div class="t-name">Mining Revenue Monetization</div>
+      <div class="t-factor"><span class="f-name">Mining Pool Inputs</span><div class="f-bar"><div class="f-fill" style="width:100%"></div></div><span>0.30</span></div>
+      <div class="t-factor"><span class="f-name">Consolidation</span><div class="f-bar"><div class="f-fill" style="width:83%"></div></div><span>0.25</span></div>
+      <div class="t-factor"><span class="f-name">Rapid Conversion</span><div class="f-bar"><div class="f-fill" style="width:83%"></div></div><span>0.25</span></div>
+      <div class="t-factor"><span class="f-name">Exchange Output</span><div class="f-bar"><div class="f-fill" style="width:66%"></div></div><span>0.20</span></div>
+    </div>
+    <div class="typo-card t3">
+      <div class="t-num">Typology 3</div>
+      <div class="t-name">Nested Exchange Services</div>
+      <div class="t-factor"><span class="f-name">Distribution Pattern</span><div class="f-bar"><div class="f-fill" style="width:100%"></div></div><span>0.25</span></div>
+      <div class="t-factor"><span class="f-name">Re-aggregation</span><div class="f-bar"><div class="f-fill" style="width:100%"></div></div><span>0.25</span></div>
+      <div class="t-factor"><span class="f-name">Cross-chain Activity</span><div class="f-bar"><div class="f-fill" style="width:80%"></div></div><span>0.20</span></div>
+      <div class="t-factor"><span class="f-name">Short Holding</span><div class="f-bar"><div class="f-fill" style="width:60%"></div></div><span>0.15</span></div>
+      <div class="t-factor"><span class="f-name">High Turnover</span><div class="f-bar"><div class="f-fill" style="width:60%"></div></div><span>0.15</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- RISK SCORING -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Risk Scoring Model</div>
+  <div class="section-desc">Composite risk formula combining typology scores, SDN proximity, volume, and recency.</div>
+
+  <div class="formula-box">
+    <div class="formula">
+      RISK <span class="op">=</span> max(T1, T2, T3) <span class="op">×</span> <span class="weight">0.50</span><br>
+      <span class="op">+</span> sdn_proximity <span class="op">×</span> <span class="weight">0.30</span><br>
+      <span class="op">+</span> volume_score <span class="op">×</span> <span class="weight">0.10</span><br>
+      <span class="op">+</span> recency_score <span class="op">×</span> <span class="weight">0.10</span>
+    </div>
+    <div class="risk-scale">
+      <div class="risk-level rl-low"><div class="r-label">Low</div><div class="r-range">0 — 30</div></div>
+      <div class="risk-level rl-med"><div class="r-label">Medium</div><div class="r-range">31 — 60</div></div>
+      <div class="risk-level rl-high"><div class="r-label">High</div><div class="r-range">61 — 80</div></div>
+      <div class="risk-level rl-crit"><div class="r-label">Critical</div><div class="r-range">81 — 100</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CORRIDOR -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Corridor Intelligence</div>
+  <div class="section-desc">Monitoring stablecoin flows across the Turkey-Russia-Iran-UAE corridor axis.</div>
+
+  <div class="corridor-visual">
+    <div class="corridor-flow">
+      <div class="corridor-node">
+        <div class="c-flag">🇮🇷</div>
+        <div class="c-name">Iran</div>
+        <div class="c-detail">IRGC-QF / CBI / Mining</div>
+      </div>
+      <div class="corridor-arrow">→</div>
+      <div class="corridor-node">
+        <div class="c-flag">🇹🇷</div>
+        <div class="c-name">Turkey</div>
+        <div class="c-detail">Transit / Nested Exchanges</div>
+      </div>
+      <div class="corridor-arrow">→</div>
+      <div class="corridor-node">
+        <div class="c-flag">🇦🇪</div>
+        <div class="c-name">UAE</div>
+        <div class="c-detail">OTC / Cash-out</div>
+      </div>
+      <div class="corridor-arrow">→</div>
+      <div class="corridor-node">
+        <div class="c-flag">🇷🇺</div>
+        <div class="c-name">Russia</div>
+        <div class="c-detail">A7A5 / Garantex / Grinex</div>
+      </div>
+    </div>
+    <div class="corridor-stat">
+      <div><div class="cs-num">52,000</div><div class="cs-label">Attributed Wallets</div></div>
+      <div><div class="cs-num">890,000</div><div class="cs-label">Analyzed Transactions</div></div>
+      <div><div class="cs-num">$5.8B</div><div class="cs-label">Est. Annual Corridor Volume</div></div>
+      <div><div class="cs-num">3</div><div class="cs-label">Evasion Typologies</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULES -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Platform Modules</div>
+  <div class="section-desc">13 integrated analytical capabilities for screening, investigation, intelligence, and compliance.</div>
+
+  <div class="mod-grid">
+    <div class="mod-card"><div class="m-icon">🔍</div><div class="m-name">Address Screening</div><div class="m-desc">SDN + 520K threat DB</div></div>
+    <div class="mod-card"><div class="m-icon">🧬</div><div class="m-name">Behavioral Fingerprint</div><div class="m-desc">6 typology scoring</div></div>
+    <div class="mod-card"><div class="m-icon">🕸️</div><div class="m-name">Network Graph</div><div class="m-desc">D3.js force-directed</div></div>
+    <div class="mod-card"><div class="m-icon">🌊</div><div class="m-name">Transaction Flow</div><div class="m-desc">Sankey diagrams</div></div>
+    <div class="mod-card"><div class="m-icon">🔗</div><div class="m-name">Bridge Trace</div><div class="m-desc">27 protocols monitored</div></div>
+    <div class="mod-card"><div class="m-icon">🌍</div><div class="m-name">Corridor Intel</div><div class="m-desc">Turkey-Russia-Iran-UAE</div></div>
+    <div class="mod-card"><div class="m-icon">🗺️</div><div class="m-name">Risk Heatmap</div><div class="m-desc">32 countries, 5 levels</div></div>
+    <div class="mod-card"><div class="m-icon">🤖</div><div class="m-name">AI Risk Analysis</div><div class="m-desc">Multi-model + debate</div></div>
+    <div class="mod-card"><div class="m-icon">💬</div><div class="m-name">Compliance AI</div><div class="m-desc">Natural language queries</div></div>
+    <div class="mod-card"><div class="m-icon">📋</div><div class="m-name">SAR Generator</div><div class="m-desc">FinCEN-ready drafts</div></div>
+    <div class="mod-card"><div class="m-icon">🛡️</div><div class="m-name">Threat Intel DB</div><div class="m-desc">520K+ addresses</div></div>
+    <div class="mod-card"><div class="m-icon">🚨</div><div class="m-name">Scam Explorer</div><div class="m-desc">Search + report</div></div>
+    <div class="mod-card"><div class="m-icon">⚡</div><div class="m-name">Developer API</div><div class="m-desc">REST + tier access</div></div>
+    <div class="mod-card"><div class="m-icon">📊</div><div class="m-name">Daily Brief</div><div class="m-desc">AI-generated intel</div></div>
+    <div class="mod-card"><div class="m-icon">📄</div><div class="m-name">PDF Reports</div><div class="m-desc">Compliance-ready</div></div>
+    <div class="mod-card"><div class="m-icon">📡</div><div class="m-name">Designation Radar</div><div class="m-desc">Predictive scoring</div></div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div class="section">
+  <div class="section-title"><div class="dot"></div>Research Foundation</div>
+  <div class="section-desc">Eight published studies providing the empirical basis for SanctionFlow's detection algorithms.</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Turkey-Iran Cryptocurrency Corridor</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6340458</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Iran's USDT Stablecoin-Based Sanctions Evasion</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6362678</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Garantex & Grinex: Russian Crypto Laundromats</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6363259</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Cross-Chain Bridges & Mixers Exploitation</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6375458</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">DeFi Protocols as Sanctions Evasion Vectors</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6375058</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Stablecoin AML: EU MiCA vs U.S. Approaches</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6368040</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Blockchain Analytics Effectiveness</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6375118</div></div>
+    <div class="source-card"><div class="s-name" style="font-size:13px;">Turkey's FATF Grey-List Exit</div><div class="s-type" style="margin-top:6px;">DOI: 10.2139/ssrn.6375178</div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="f-name">SanctionFlow v2.0 — Osman Sonmez</div>
+  <div class="f-links">
+    <a href="https://sanctionflow.io">sanctionflow.io</a>
+    <a href="https://github.com/sonmez-lab">github.com/sonmez-lab</a>
+    <a href="https://scholar.google.com">Google Scholar</a>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
